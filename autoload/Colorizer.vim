@@ -2284,6 +2284,12 @@ function! Colorizer#ColorToggle() "{{{1
     endif
 endfu
 
+function! Colorizer#ColorConceal() "{{{1
+    let g:colorizer_term_only_conceal = 1
+    call Colorizer#DoColor(0, 1, line('$'))
+    let g:colorizer_term_only_conceal = 0
+endfunction
+
 function! Colorizer#ColorOff() "{{{1
     for _match in s:GetMatchList()
         sil! call matchdelete(_match.id)
@@ -2414,7 +2420,9 @@ function! Colorizer#DoColor(force, line1, line2, ...) "{{{1
             let cmd = printf(':sil keeppatterns %d,%d%ss/%s/\=call(Pat[1],%s)/'. s_flags,
                 \ a:line1, a:line2,  s:color_unfolded, Pat[0], arg)
             try
-                exe cmd
+                if !get(g:, Pat[2] . '_only_conceal', 0)
+                    exe cmd
+                endif
                 let Pat[3] = s:Reltime(start)
                 " Hide ESC Terminal Chars
                 let start = s:Reltime()

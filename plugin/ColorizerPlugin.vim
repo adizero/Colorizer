@@ -37,6 +37,7 @@ command! -bang -nargs=1  RGB2Term
 command! -nargs=1  Term2RGB     :call Colorizer#Term2RGB(<q-args>)
 
 command! -bang    ColorClear    :call Colorizer#ColorOff()
+command! -bang    ColorConceal  :call Colorizer#ColorConceal()
 command! -bang    ColorToggle   :call Colorizer#ColorToggle()
 command! -nargs=1 HSL2RGB       :call Colorizer#HSL2Term(<q-args>)
 command!          ColorContrast :call Colorizer#SwitchContrast()
